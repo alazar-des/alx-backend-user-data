@@ -11,10 +11,12 @@ import mysql.connector
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
-def filter_datum(fields: List[str], redaction: str, message: str, separator: str) -> str:
+def filter_datum(fields: List[str], redaction: str, message: str,
+                 separator: str) -> str:
     """Replace string with in message with redaction"""
     for fld in fields:
-        message = re.sub(r"{}=.+?{}".format(fld, separator), r" {}={}{}".format(fld, redaction, separator), message)
+        message = re.sub(r"{}=.+?{}".format(fld, separator),
+                         r" {}={}{}".format(fld, redaction, separator), message)
     return message
 
 
@@ -28,12 +30,12 @@ class RedactingFormatter(logging.Formatter):
 
     def __init__(self, fields=None):
         super(RedactingFormatter, self).__init__(self.FORMAT)
-        self._fields = fields
+        self.fields = fields
 
     def format(self, record: logging.LogRecord) -> str:
         """filter LogRecord with filter_datum"""
         orignal = logging.Formatter.format(self, record)
-        return filter_datum(self._fields, self.REDACTION,
+        return filter_datum(self.fields, self.REDACTION,
                             orignal, self.SEPARATOR)
 
 
