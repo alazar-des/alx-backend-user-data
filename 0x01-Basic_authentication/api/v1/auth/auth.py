@@ -19,7 +19,7 @@ class Auth:
             return False
 
         for ep in excluded_paths:
-            if "*" in ep:
+            if ep[-1] == "*":
                 pattern = "^" + ep
                 if re.match(pattern, path):
                     return False
