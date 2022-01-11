@@ -39,7 +39,7 @@ class BasicAuth(Auth):
             self, decoded_base64_authorization_header: str) -> (str, str):
         """ extract user credentials
         """
-        pwd = ""
+        pwd = ":"
         if decoded_base64_authorization_header is None or\
            type(decoded_base64_authorization_header) != str:
             return (None, None)
@@ -59,10 +59,11 @@ class BasicAuth(Auth):
         if user_pwd is None or type(user_pwd) != str:
             return None
 
-        obj = User.search({'email': user_email})
-        if obj:
-            if obj[0].is_valid_password(user_pwd):
-                return obj[0]
+        objs = User.search({'email': user_email})
+        if objs:
+            for obj in objs:
+                if obj.is_valid_password(user_pwd):
+                    return obj
         return None
 
     def current_user(self, request=None) -> TypeVar('User'):
