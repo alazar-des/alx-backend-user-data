@@ -19,9 +19,10 @@ class Auth:
             return False
 
         for ep in excluded_paths:
-            pattern = "^" + ep
-            if re.match(pattern, path):
-                return False
+            if "*" in ep:
+                pattern = "^" + ep
+                if re.match(pattern, path):
+                    return False
         return True
 
     def authorization_header(self, request=None) -> str:
