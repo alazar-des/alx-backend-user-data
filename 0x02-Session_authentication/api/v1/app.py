@@ -42,6 +42,13 @@ if getenv("AUTH_TYPE", None) == "session_exp_auth":
     auth = SessionExpAuth()
 
 
+if getenv("AUTH_TYPE", None) == "session_db_auth":
+    """session with db auth
+    """
+    from api.v1.auth.session_db_auth import SessionDBAuth
+    auth = SessionDBAuth()
+
+
 @app.errorhandler(404)
 def not_found(error) -> str:
     """ Not found handler
