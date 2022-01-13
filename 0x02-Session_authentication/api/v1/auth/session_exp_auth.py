@@ -10,6 +10,7 @@ class SessionExpAuth(SessionAuth):
     """Session Expiration class
     """
     user_id_by_session_id = {}
+
     def __init__(self):
         sd = getenv("SESSION_DURATION", None)
         if not sd:
@@ -37,7 +38,7 @@ class SessionExpAuth(SessionAuth):
         """
         if session_id is None:
             return None
-        session_dict =  SessionExpAuth.user_id_by_session_id.get(session_id)
+        session_dict = SessionExpAuth.user_id_by_session_id.get(session_id)
         if not session_dict:
             return None
         if self.session_duration <= 0:
