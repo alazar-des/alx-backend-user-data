@@ -15,21 +15,21 @@ CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 auth = None
 if getenv("AUTH_TYPE", None) == "auth":
-    """auth
+    """auth instance
     """
     from api.v1.auth.auth import Auth
     auth = Auth()
 
 
 if getenv("AUTH_TYPE", None) == "basic_auth":
-    """basic auth
+    """basic auth instance
     """
     from api.v1.auth.basic_auth import BasicAuth
     auth = BasicAuth()
 
 
 if getenv("AUTH_TYPE", None) == "session_auth":
-    """session auth
+    """session auth instance
     """
     from api.v1.auth.session_auth import SessionAuth
     auth = SessionAuth()
@@ -89,6 +89,8 @@ def before_request():
 
 
 if __name__ == "__main__":
+    """ run app
+    """
     host = getenv("API_HOST", "0.0.0.0")
     port = getenv("API_PORT", "5000")
     app.run(host=host, port=port)
