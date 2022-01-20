@@ -6,7 +6,7 @@ from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
 import uuid
-from typing import TypeVar
+from typing import Union
 
 
 def _hash_password(password: str) -> bytes:
@@ -15,7 +15,7 @@ def _hash_password(password: str) -> bytes:
     return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
 
-def _generate_uuid() -> None:
+def _generate_uuid() -> str:
     """generate uuid
     """
     return str(uuid.uuid4())
@@ -28,7 +28,7 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
-    def register_user(self, email: str, password: str) -> TypeVar('User'):
+    def register_user(self, email: str, password: str) -> User:
         """Register user
         """
         try:
@@ -47,7 +47,7 @@ class Auth:
         except NoResultFound:
             return False
 
-    def create_session(self, email: str) -> str:
+    def create_session(self, email: str) -> Union[str, None]:
         """create session id and store it in db
         """
         try:
@@ -58,7 +58,7 @@ class Auth:
         except NoResultFound:
             return None
 
-    def get_user_from_session_id(self, session_id: str) -> TypeVar('User'):
+    def get_user_from_session_id(self, session_id: str) -> Union[User, None]:
         """Get user from session id
         """
         if session_id is None:
