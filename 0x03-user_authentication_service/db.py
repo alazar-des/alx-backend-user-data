@@ -32,7 +32,7 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str, hashed_password: str) -> TypeVar('User'):
+    def add_user(self, email: str, hashed_password: str) -> User:
         """Add user to db
         """
         usr = User(email=email, hashed_password=hashed_password)
@@ -40,7 +40,7 @@ class DB:
         self._session.commit()
         return usr
 
-    def find_user_by(self, **kwargs):
+    def find_user_by(self, **kwargs) -> User:
         """Return the first row in the users table
         """
         usr = self._session.query(User).filter_by(**kwargs).first()
