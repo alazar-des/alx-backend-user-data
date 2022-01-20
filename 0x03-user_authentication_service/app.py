@@ -85,7 +85,7 @@ def update_password():
     """
     try:
         AUTH.update_password(request.form['reset_token'],
-                             request.form['password'])
+                             request.form['new_password'])
         return jsonify({"email": request.form['email'],
                         "message": "Password updated"}), 200
     except ValueError:
