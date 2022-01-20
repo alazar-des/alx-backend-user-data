@@ -8,7 +8,6 @@ from sqlalchemy.orm.session import Session
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
 from user import Base, User
-from typing import TypeVar
 
 
 class DB:
@@ -56,5 +55,5 @@ class DB:
             for key, value in kwargs.items():
                 setattr(usr, key, value)
             self._session.commit()
-        except Exception:
+        except NoResultFound:
             raise ValueError
